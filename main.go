@@ -4,6 +4,8 @@ import (
 	"fmt"
 
 	"github.com/bwmarrin/discordgo"
+	"github.com/skvamshi/BotKi-teer/config"
+	"github.com/skvamshi/BotKi-teer/events"
 )
 
 var (
@@ -13,13 +15,14 @@ var (
 
 func main() {
 
-	discord, err := discordgo.New("Bot NjAwNjQxMDMxNzE2OTk1MDcy.XS7g5Q.VgOhZB2FlbzxDPfGR_D2YIphCqA")
+	config := config.InitializeConfig()
+	discord, err := discordgo.New(config.BotAuthHeader)
 	errCheck("error creating discord session", err)
 	user, err := discord.User("@me")
 	errCheck("error retrieving account", err)
-	config := config.InitializeConfig(user.ID)
-	botID = user.ID
-	discord.AddHandler(Events.CommandHandler)
+	config.BotID = user.ID
+	messageService := events.NewTextEvent(config)
+	discord.AddHandler(messageService.CommandHandler)
 	discord.AddHandler(func(discord *discordgo.Session, ready *discordgo.Ready) {
 		err = discord.UpdateStatus(0, "A friendly helpful bot!")
 		if err != nil {

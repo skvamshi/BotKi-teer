@@ -1,15 +1,26 @@
-package Events
+package events
 
 import (
 	"fmt"
 	"strings"
 
 	"github.com/bwmarrin/discordgo"
+	"github.com/skvamshi/BotKi-teer/config"
 )
 
-func CommandHandler(discord *discordgo.Session, message *discordgo.MessageCreate) {
+type TextEvent struct {
+	config *config.Config
+}
+
+func NewTextEvent(config *config.Config) *TextEvent {
+	return &TextEvent{
+		config: config,
+	}
+}
+
+func (texEvent *TextEvent) CommandHandler(discord *discordgo.Session, message *discordgo.MessageCreate) {
 	user := message.Author
-	if user.ID == botID || user.Bot {
+	if user.ID == texEvent.config.BotID || user.Bot {
 		//Do nothing because the bot is talking
 		return
 	}

@@ -4,16 +4,15 @@ package config
 type Config struct {
 	BotID         string
 	CommandPrefix string
-	BotAuthToken  string
+	BotAuthHeader string
 }
 
-func InitializeConfig(botID string) Config {
+func InitializeConfig() *Config {
 
-	configData := Config{
-		BotID:         botID,
+	return &Config{
+		BotID:         "",
 		CommandPrefix: "->b ",
-		BotAuthToken:  "NjAwNjQxMDMxNzE2OTk1MDcy.XS7g5Q.VgOhZB2FlbzxDPfGR_D2YIphCqA",
+		BotAuthHeader: "Bot NjAwNjQxMDMxNzE2OTk1MDcy.XS7g5Q.VgOhZB2FlbzxDPfGR_D2YIphCqA",
 	}
 
-	return configData
 }
