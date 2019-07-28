@@ -15,6 +15,10 @@ var (
 
 func main() {
 
+	// c := scrapper.InitializeScrapper()
+
+	// fmt.Println(c)
+
 	config := config.InitializeConfig()
 	discord, err := discordgo.New(config.BotAuthHeader)
 	errCheck("error creating discord session", err)
